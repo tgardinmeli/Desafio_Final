@@ -3,6 +3,7 @@ package com.meli.desafio_final.service;
 import com.meli.desafio_final.dto.DiscountResponseDto;
 import com.meli.desafio_final.dto.ShopOrderRequestDto;
 import com.meli.desafio_final.dto.ShopOrderResponseDto;
+import com.meli.desafio_final.exception.BadRequestException;
 import com.meli.desafio_final.exception.NotFoundException;
 import com.meli.desafio_final.model.SellerAd;
 import com.meli.desafio_final.model.ShopOrder;
@@ -145,5 +146,23 @@ class ShopOrderServiceTest {
         List<DiscountResponseDto> discountResponseDto = service.discountsAvailable(1L);
 
         assertThat(discountResponseDto.size()).isEqualTo(1);
+    }
+
+
+    @Test
+    public void throw_exception_discountsAvailable(){
+        ShopOrder shopOrder = TestUtilsGeneratorShopOrder.newShopOrderReq6();
+        shopOrder.setStatus(Status.CLOSED);
+
+        BDDMockito.when(shopOrderRepository.findById(anyLong()))
+                .thenReturn(Optional.of(shopOrder));
+
+
+        BadRequestException exception = assertThrows(BadRequestException.class, () -> {
+            service.discountsAvailable(10L);
+        });
+
+        assertThat(exception.getClass()).isEqualTo(BadRequestException.class);
+
     }
 }
