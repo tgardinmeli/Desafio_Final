@@ -1,5 +1,7 @@
 package com.meli.desafio_final.util;
 
+import com.meli.desafio_final.dto.BatchStockRequestDto;
+import com.meli.desafio_final.dto.InboundOrderRequestDto;
 import com.meli.desafio_final.dto.OrderAdRequestDto;
 import com.meli.desafio_final.dto.ShopOrderRequestDto;
 import com.meli.desafio_final.model.*;
@@ -129,6 +131,66 @@ public class TestUtilsGeneratorShopOrder {
         return Buyer.builder()
                 .buyerId(1)
                 .user(TestUtilsGeneratorInboundOrder.getUserMock())
+                .build();
+    }
+
+    public static ShopOrder newShopOrderReq6(){
+        SellerAd sellerAd = SellerAd.builder()
+                .seller(null)
+                .product(Product.builder()
+                        .productName("picanha")
+                        .category(Category.FRESH)
+                        .build())
+                .build();
+
+        List<ShopOrderItem> shopOrderItems = new ArrayList<>();
+        shopOrderItems.add(ShopOrderItem.builder()
+                .sellerAd(sellerAd)
+                .price(120)
+                .quantity(1)
+                .build());
+
+        return ShopOrder.builder()
+                .orderId(1)
+                .shopOrderItem(shopOrderItems)
+                .status(Status.OPEN)
+                .build();
+    }
+
+    public static InboundOrderRequestDto inboundOrderRequestDtoReq6(){
+        List<BatchStockRequestDto> list = new ArrayList<>();
+
+        list.add(BatchStockRequestDto.builder()
+                .sellerAdId(7L)
+                .currentTemperature(8.0)
+                .minimumTemperature(1.0)
+                .initialQuantity(10)
+                .manufacturingDate(LocalDate.now())
+                .manufacturingTime(LocalDateTime.now())
+                .volume(50.0)
+                .dueDate(LocalDate.now().plusMonths(2))
+                .build());
+
+        return InboundOrderRequestDto.builder()
+                .orderDate(LocalDate.now())
+                .section(3L)
+                .batchStockList(list)
+                .build();
+    }
+
+    public static ShopOrderRequestDto shopOrderRequestDtoReq6(){
+        List<OrderAdRequestDto> orderAdRequestDtoList = new ArrayList<>();
+
+        orderAdRequestDtoList.add(OrderAdRequestDto.builder()
+                .sellerAdId(7L)
+                .quantity(1)
+                .build());
+
+        return ShopOrderRequestDto.builder()
+                .buyerId(1L)
+                .date(LocalDate.now())
+                .orderStatus(Status.OPEN)
+                .products(orderAdRequestDtoList)
                 .build();
     }
 

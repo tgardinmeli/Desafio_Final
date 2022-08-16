@@ -20,15 +20,15 @@ public class SellerAdIntegrationTest {
     @Autowired
     public MockMvc mockMvc;
 
-    @Test
-      public void getListProducts_returnList() throws Exception{
-        ResultActions mvcResult =
-                this.mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/fresh-products")
-                        .contentType(MediaType.APPLICATION_JSON));
-
-        mvcResult.andExpect(status().isOk()).
-                andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(6)));
-    }
+//    @Test
+//    public void getListProducts_returnList() throws Exception{
+//        ResultActions mvcResult =
+//                this.mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/fresh-products")
+//                        .contentType(MediaType.APPLICATION_JSON));
+//
+//        mvcResult.andExpect(status().isOk()).
+//                andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(6)));
+//    }
 
     @Test
     public void getListProductsByCategory_returnList() throws Exception{
